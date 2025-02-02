@@ -1,0 +1,55 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class BankAccount {
+  
+    private double accountBalance;
+    private List<String> transactionHistory;
+
+    public BankAccount(double initialBalance) {
+        this.accountBalance = initialBalance;
+        this.transactionHistory = new ArrayList<>();
+        addTransaction("Account opened with balance: " + initialBalance);
+    }
+    public double getAccountBalance() {
+        return accountBalance;
+    }
+    public void depositFunds(double amount) {
+        if (amount > 0) {
+            accountBalance += amount;
+            addTransaction("Deposit: " + amount);
+        } else {
+            System.out.println("Invalid deposit amount.");
+        }
+    }
+
+    public void withdrawFunds(double amount) {
+        if (amount > 0 && amount <= accountBalance) {
+            accountBalance -= amount;
+            addTransaction("Withdrawal: " + amount);
+        } else {
+            System.out.println("Invalid withdrawal amount or insufficient balance.");
+        }
+    }
+
+    private void addTransaction(String transaction) {
+        transactionHistory.add(transaction);
+    }
+
+    public void displayTransactionHistory() {
+        System.out.println("Transaction History:");
+        for (String transaction : transactionHistory) {
+            System.out.println(transaction);
+        }
+    }
+}
+
+public class BankingApp {
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount(1000.00);
+        account.depositFunds(500);
+        account.withdrawFunds(200);
+        System.out.println("Current Balance: $" + account.getAccountBalance());
+        account.displayTransactionHistory();
+    }
+}
